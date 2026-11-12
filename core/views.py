@@ -16,23 +16,6 @@ def index(request):
 
 
 def lista_usuarios(request):
-    """
-    Vista 2: muestra usuarios junto con sus relaciones OneToOne,
-    amistades, grupos y chats.
-    
-    SQL aproximado:
-    SELECT usuario.*, perfilusuario.*, configuracionusuario.*,
-           estadisticasusuario.*
-    FROM core_usuario AS usuario
-    LEFT JOIN core_perfilusuario AS perfilusuario
-        ON perfilusuario.usuario_id = usuario.id
-    LEFT JOIN core_configuracionusuario AS configuracionusuario
-        ON configuracionusuario.usuario_id = usuario.id
-    LEFT JOIN core_estadisticasusuario AS estadisticasusuario
-        ON estadisticasusuario.usuario_id = usuario.id
-    ORDER BY usuario.username
-    LIMIT 50;
-    """
     usuarios = (
         Usuario.objects
         .select_related("perfil", "configuracion", "estadisticas")
@@ -49,9 +32,6 @@ def lista_usuarios(request):
 
 
 def detalle_usuario(request, usuario_id):
-    """
-    Vista 3: muestra un usuario y sus relaciones.
-    """
     usuario = get_object_or_404(
         Usuario.objects
         .select_related("perfil", "configuracion", "estadisticas")
@@ -75,17 +55,6 @@ def detalle_usuario(request, usuario_id):
 
 
 def lista_juegos(request):
-    """
-    Vista 4: muestra juegos y sus relaciones ManyToMany
-    y relaciones inversas.
-
-    SQL aproximado:
-    SELECT juego.*
-    FROM core_juego AS juego
-    WHERE juego.nombre IS NOT NULL AND juego.genero IS NOT NULL
-    ORDER BY juego.nombre
-    LIMIT 100;
-    """
     juegos = (
         Juego.objects
         .filter(nombre__isnull=False, genero__isnull=False)
@@ -102,15 +71,6 @@ def lista_juegos(request):
 
 
 def lista_grupos(request):
-    """
-    Vista 5: muestra grupos con usuarios, juegos y pertenencias.
-
-    SQL aproximado:
-    SELECT grupo.*
-    FROM core_grupo AS grupo
-    ORDER BY grupo.nombre
-    LIMIT 100;
-    """
     grupos = (
         Grupo.objects
         .prefetch_related(
@@ -221,27 +181,6 @@ def detalle_noticia(request, noticia_id):
 
 
 def estadisticas(request):
-    """
-    Vista 9: calcula agregaciones y filtra usuarios por
-    el número de noticias publicadas.
-
-    SQL aproximado:
-    SELECT COUNT(core_usuario.id),
-           AVG(core_estadisticasusuario.horas_totales),
-           SUM(core_estadisticasusuario.horas_totales)
-    FROM core_usuario
-    LEFT JOIN core_estadisticasusuario
-        ON core_estadisticasusuario.usuario_id = core_usuario.id;
-
-    SQL aproximado del filtro de agregación:
-    SELECT usuario.*, COUNT(noticia.id) AS num_noticias
-    FROM core_usuario AS usuario
-    LEFT JOIN core_noticia AS noticia
-        ON noticia.autor_id = usuario.id
-    GROUP BY usuario.id
-    HAVING COUNT(noticia.id) >= 1
-    ORDER BY num_noticias DESC, usuario.username;
-    """
     resumen = Usuario.objects.aggregate(
         total_usuarios=Count("id"),
         media_horas=Avg("estadisticas__horas_totales"),
@@ -317,16 +256,13 @@ def buscar_juego(request, termino):
 # Errores personalizados
 
 def error_400(request, exception=None):
-    return render(request, "core/errores/400.html", status=400)
-
+    return render(request, 'core/errores/400.html', status=400)
 
 def error_403(request, exception=None):
-    return render(request, "core/errores/403.html", status=403)
-
+    return render(request, 'core/errores/403.html', status=403)
 
 def error_404(request, exception=None):
-    return render(request, "core/errores/404.html", status=404)
+    return render(request, 'core/errores/404.html', status=404)
 
-
-def error_500(request, exception=None):
-    return render(request, "core/errores/500.html", status=500)
+def error_500(request):
+    return render(request, 'core/errores/500.html', status=500)
