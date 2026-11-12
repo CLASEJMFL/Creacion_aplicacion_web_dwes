@@ -23,4 +23,11 @@ urlpatterns = [
         views.lista_usuarios,
         name="usuarios",
     ),
+
+    # URL 8: detalle de una noticia
+    path(
+        "noticias/<int:noticia_id>/",
+        views.detalle_noticia,
+        name="noticia_detalle",
+    ),
 ]
