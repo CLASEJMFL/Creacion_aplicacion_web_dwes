@@ -300,8 +300,86 @@ El campo `Noticia.grupo` permite valores nulos, por lo que una noticia puede no 
 Los modelos `Pertenencia` y `ParticipanteChat` permiten almacenar datos adicionales de las relaciones.
 
 **Nota sobre UsuarioJuego:** en el código documentado, `UsuarioJuego` tiene dos `ForeignKey`, pero no consta un `ManyToManyField` que lo utilice mediante `through`. Por ello, no se contabiliza como una relación muchos a muchos declarada formalmente hasta que se incorpore ese campo.
+## 6. URLs, Views y consultas QuerySet
 
-## 6. Tipos de campos utilizados
+### 6.1. URLs de la aplicación
+
+La aplicación GameLoop dispone de diez URLs principales, definidas en `core/urls.py` mediante la función `path()`. Cada ruta está asociada a una vista de `core/views.py`.
+
+| Nº | URL | Vista | Descripción |
+|---|---|---|---|
+| 1 | `/` | `index` | Muestra la página principal. |
+| 2 | `/usuarios/` | `lista_usuarios` | Muestra el listado de usuarios. |
+| 3 | `/usuarios/<int:usuario_id>/` | `detalle_usuario` | Muestra los detalles de un usuario. |
+| 4 | `/juegos/` | `lista_juegos` | Muestra el listado de videojuegos. |
+| 5 | `/grupos/` | `lista_grupos` | Muestra los grupos registrados. |
+| 6 | `/grupos/<int:grupo_id>/<str:rol>/` | `detalle_grupo` | Muestra un grupo y permite filtrar sus miembros por rol. |
+| 7 | `/noticias/` | `lista_noticias` | Muestra las noticias publicadas. |
+| 8 | `/noticias/<int:noticia_id>/` | `detalle_noticia` | Muestra una noticia concreta. |
+| 9 | `/estadisticas/` | `estadisticas` | Muestra estadísticas de los usuarios. |
+| 10 | `/buscar/<str:termino>/` | `buscar_juego` | Busca videojuegos por nombre, género o descripción. |
+
+### 6.2. Vistas
+
+Las vistas se encuentran en `core/views.py` y utilizan funciones de Django para recuperar información de la base de datos y enviarla a las plantillas HTML mediante `render()`.
+
+Las vistas de detalle utilizan `get_object_or_404()` para recuperar un objeto concreto y devolver un error 404 cuando no existe.
+
+Cada vista incluye un comentario explicativo de su funcionamiento.
+
+### 6.3. Métodos QuerySet utilizados
+
+Para consultar y recuperar información de la base de datos se utilizan los siguientes métodos:
+
+| Método | Utilización |
+|---|---|
+| `all()` | Recupera todos los registros de una consulta. |
+| `filter()` | Filtra registros según determinadas condiciones. |
+| `exclude()` | Excluye registros que cumplen determinadas condiciones. |
+| `order_by()` | Ordena los resultados. |
+| `select_related()` | Recupera relaciones ForeignKey y OneToOne mediante JOIN. |
+| `prefetch_related()` | Recupera relaciones ManyToMany y relaciones inversas mediante consultas adicionales. |
+| `annotate()` | Añade cálculos a los resultados de una consulta. |
+| `aggregate()` | Calcula valores generales sobre un conjunto de registros. |
+| `exists()` | Comprueba si una consulta devuelve resultados. |
+
+También se utiliza `Q()` para combinar condiciones de búsqueda y `Count()`, `Avg()` y `Sum()` para realizar operaciones de agregación.
+
+### 6.4. Obtención de datos entre tablas relacionadas
+
+Las vistas utilizan las relaciones definidas en los modelos para recuperar información de distintas tablas.
+
+**OneToOne:**
+- Se recupera el perfil de cada usuario.
+- Se consultan sus preferencias de configuración.
+- Se obtienen sus estadísticas personales.
+
+**ManyToMany:**
+- Se obtienen los usuarios pertenecientes a cada grupo.
+- Se recuperan los juegos asociados a los grupos.
+- Se consultan los participantes de los chats.
+
+**ManyToOne:**
+- Se recuperan las noticias junto con sus autores y juegos.
+- Se consultan los comentarios y las reacciones de cada noticia.
+- Se obtienen las amistades enviadas y recibidas por cada usuario.
+- Se recuperan los mensajes y las notificaciones de los usuarios.
+
+### 6.5. Plantillas y presentación de los datos
+
+Las plantillas HTML muestran la información recuperada por las vistas.
+
+Entre ellas destacan:
+
+- `usuarios.html`: muestra usuarios, perfiles, configuraciones, estadísticas, grupos y amistades.
+- `usuario_detalle.html`: muestra los datos de un usuario y sus relaciones con otras entidades.
+- `grupos.html`: muestra los grupos, sus usuarios, juegos y datos de la tabla intermedia `Pertenencia`.
+- `grupo_detalle.html`: muestra los miembros de un grupo y sus roles.
+- `noticias.html` y `noticia_detalle.html`: muestran noticias, autores, juegos, comentarios y reacciones.
+
+De esta forma se comprueba la utilización de las relaciones entre modelos y la presentación de los datos relacionados en la aplicación.
+
+## 7. Tipos de campos utilizados
 
 Los modelos emplean los siguientes tipos de campos de Django:
 
@@ -323,7 +401,7 @@ Los modelos emplean los siguientes tipos de campos de Django:
 
 Los tres últimos son campos relacionales; los diez primeros son tipos de campos no relacionales.
 
-## 7. Parámetros de los campos
+## 8. Parámetros de los campos
 
 | Parámetro | Descripción | Ejemplo en el proyecto |
 |---|---|---|
@@ -341,13 +419,13 @@ Los tres últimos son campos relacionales; los diez primeros son tipos de campos
 
 **Diferencia entre `blank` y `null`:** `blank` afecta a la validación del campo; `null` afecta al almacenamiento en la base de datos.
 
-## 8. Diagrama entidad-relación
+## 9. Diagrama entidad-relación
 
 <img width="1085" height="789" alt="modelo entidad relacion" src="https://github.com/user-attachments/assets/b4fe0312-9f53-4b35-85ca-c85609affbd4" />
 <img width="1536" height="1024" alt="modelo relacional" src="https://github.com/user-attachments/assets/e3abb246-dce2-4e7c-b1a7-fe00ea999493" />
 
 
-## 9. Generación de datos de prueba
+## 10. Generación de datos de prueba
 
 El proyecto dispone de un comando personalizado ubicado en:
 
@@ -363,24 +441,24 @@ El comando permite generar datos de prueba para comprobar los modelos y sus rela
 
 Si el requisito de la práctica es crear diez registros aleatorios por cada modelo, debe verificarse que la implementación de `seed.py` genere diez registros de cada modelo y respete las dependencias entre entidades.
 
-## 10. Instalación y ejecución
+## 11. Instalación y ejecución
 
 Los siguientes comandos se ejecutan desde la carpeta raíz del proyecto.
 
-### 10.1. Crear y activar el entorno virtual
+### 11.1. Crear y activar el entorno virtual
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### 10.2. Instalar dependencias
+### 11.2. Instalar dependencias
 
 ```bash
 python3 -m pip install -r requirements.txt
 ```
 
-### 10.3. Crear y aplicar migraciones
+### 11.3. Crear y aplicar migraciones
 
 Si todavía no existen migraciones para los modelos:
 
@@ -395,13 +473,13 @@ Si las migraciones ya existen en el repositorio:
 python3 manage.py migrate
 ```
 
-### 10.4. Crear un superusuario
+### 11.4. Crear un superusuario
 
 ```bash
 python3 manage.py createsuperuser
 ```
 
-### 10.5. Iniciar el servidor
+### 11.5. Iniciar el servidor
 
 ```bash
 python3 manage.py runserver
@@ -411,11 +489,11 @@ Por defecto, el servidor de desarrollo estará disponible en:
 
 `http://127.0.0.1:8000/`
 
-## 11. Copias de seguridad y fixtures
+## 12. Copias de seguridad y fixtures
 
 Django permite exportar e importar datos mediante fixtures.
 
-### 11.1. Exportar los datos
+### 12.1. Exportar los datos
 
 Para generar una copia de seguridad en `backup.json`:
 
@@ -430,7 +508,7 @@ python3 manage.py dumpdata \
   -o backup.json
 ```
 
-### 11.2. Importar los datos
+### 12.2. Importar los datos
 
 Para cargar los datos del archivo:
 
@@ -440,7 +518,7 @@ python3 manage.py loaddata backup.json
 
 Antes de restaurar una copia, deben estar aplicadas las migraciones correspondientes. Es recomendable comprobar que el fixture puede importarse correctamente en una base de datos compatible.
 
-## 12. Control de versiones
+## 13. Control de versiones
 
 Git permite registrar los cambios del proyecto y mantener diferentes ramas de trabajo.
 
@@ -455,7 +533,7 @@ El archivo `.gitignore` debe excluir el entorno virtual (`.venv/` o `venv/`), `_
 
 Deben mantenerse en el repositorio los archivos necesarios para ejecutar y evaluar el proyecto, como `requirements.txt`, las migraciones y el fixture cuando corresponda.
 
-## 13. Conclusión
+## 14. Conclusión
 
 GameLoop aplica conceptos de desarrollo web con Django y Python mediante modelos, relaciones entre entidades, datos de prueba y copias de seguridad.
 

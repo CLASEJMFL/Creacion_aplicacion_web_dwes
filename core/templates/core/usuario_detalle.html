@@ -17,12 +17,15 @@
 {% if usuario.estadisticas %}<p>Juegos favoritos: {{ usuario.estadisticas.juegos_favoritos }} | Horas: {{ usuario.estadisticas.horas_totales }} | Nivel: {{ usuario.estadisticas.nivel }} | Puntuación media: {{ usuario.estadisticas.puntuacion_media }}</p>{% else %}<p>Sin estadísticas.</p>{% endif %}
 
 <h3>Amistades enviadas</h3>
-<ul>{% for amistad in usuario.amistades_enviadas.all %}<li>{{ amistad.usuario_destino.username }} — {{ amistad.estado }} — {{ amistad.fecha_solicitud }} — Aceptación: {{ amistad.fecha_aceptacion|default:"Pendiente" }}</li>{% empty %}<li>No tiene amistades enviadas.</li>{% endfor %}</ul>
+<ul>{% for amistad in usuario.amistades_enviadas.all %}<li>{{ amistad.usuario_destino.username }} — 
+    {{ amistad.estado }} — {{ amistad.fecha_solicitud }} — Aceptación: {{ amistad.fecha_aceptacion|default:"Pendiente" }}
+</li>{% empty %}<li>No tiene amistades enviadas.</li>{% endfor %}</ul>
 <h3>Amistades recibidas</h3>
 <ul>{% for amistad in usuario.amistades_recibidas.all %}<li>{{ amistad.usuario_origen.username }} — {{ amistad.estado }} — {{ amistad.fecha_solicitud }} — Aceptación: {{ amistad.fecha_aceptacion|default:"Pendiente" }}</li>{% empty %}<li>No tiene amistades recibidas.</li>{% endfor %}</ul>
 
 <h3>Grupos</h3>
-<ul>{% for grupo in usuario.grupos.all %}<li><a href="{% url 'grupo_detalle' grupo.id 'todos' %}">{{ grupo.nombre }}</a> — {{ grupo.descripcion }}</li>{% empty %}<li>No pertenece a grupos.</li>{% endfor %}</ul>
+<ul>{% for grupo in usuario.grupos.all %}<li><a href="{% url 'grupo_detalle' grupo.id 'todos' %}">
+    {{ grupo.nombre }}</a> — {{ grupo.descripcion }}</li>{% empty %}<li>No pertenece a grupos.</li>{% endfor %}</ul>
 
 <h3>Juegos asociados</h3>
 <ul>{% for relacion in usuario.usuariojuego_set.all %}<li>{{ relacion.juego.nombre }} — {{ relacion.horas_jugadas }} horas — Favorito: {{ relacion.favorito }} — Inicio: {{ relacion.fecha_inicio }}</li>{% empty %}<li>No tiene juegos asociados.</li>{% endfor %}</ul>

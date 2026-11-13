@@ -71,4 +71,11 @@ urlpatterns = [
         views.buscar_juego,
         name="buscar_juego",
     ),
+    
+    # Url con re_path
+    re_path(
+        r'^buscar-regex/(?P<termino>[a-zA-Z0-9_-]+)/$',
+        views.buscar_juego,
+        name="buscar_juego_regex"
+    ),
 ]
