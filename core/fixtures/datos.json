@@ -1,0 +1,471 @@
+[
+{
+    "model": "core.usuario",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$Bm0BQTorywhhHiDWGkNNog$k6emFbISTtE2ssX/SMsHHDiWF0RlfXqnisAVGUIGIpg=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "ana",
+        "first_name": "Ana",
+        "last_name": "Garcia",
+        "email": "ana@gameloop.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-11-15T11:21:35.166Z",
+        "foto_perfil": "",
+        "biografia": "Me encantan los videojuegos.",
+        "fecha_registro": "2026-11-15T11:21:35.373Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "core.usuario",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$4R3SNjwJD0YsYLCQAqJhGD$2WOWi2N+hPbV3QRRUamVLWskm+37hyDrPMnSojgOpRY=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "carlos",
+        "first_name": "Carlos",
+        "last_name": "Lopez",
+        "email": "carlos@gameloop.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-11-15T11:21:35.382Z",
+        "foto_perfil": "",
+        "biografia": "",
+        "fecha_registro": "2026-11-15T11:21:35.603Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "core.usuario",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$cBp9v9QSAfpodSfdOvXHeS$W/BVqrxM/iNuEzSvGLJMFdwO1YB0F8Qo7G/nU+jsl9M=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "lucia",
+        "first_name": "Lucia",
+        "last_name": "Martin",
+        "email": "lucia@gameloop.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-11-15T11:21:35.611Z",
+        "foto_perfil": "",
+        "biografia": "",
+        "fecha_registro": "2026-11-15T11:21:35.821Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "core.perfilusuario",
+    "pk": 1,
+    "fields": {
+        "usuario": 1,
+        "nombre_visible": "Ana",
+        "biografia": "Jugador de GameLoop",
+        "fecha_nacimiento": "2000-05-15",
+        "web": ""
+    }
+},
+{
+    "model": "core.perfilusuario",
+    "pk": 2,
+    "fields": {
+        "usuario": 2,
+        "nombre_visible": "Carlos",
+        "biografia": "Jugador de GameLoop",
+        "fecha_nacimiento": "2000-05-15",
+        "web": ""
+    }
+},
+{
+    "model": "core.perfilusuario",
+    "pk": 3,
+    "fields": {
+        "usuario": 3,
+        "nombre_visible": "Lucia",
+        "biografia": "Jugador de GameLoop",
+        "fecha_nacimiento": "2000-05-15",
+        "web": ""
+    }
+},
+{
+    "model": "core.configuracionusuario",
+    "pk": 1,
+    "fields": {
+        "usuario": 1,
+        "tema_oscuro": true,
+        "notificaciones_activadas": true,
+        "idioma": "es"
+    }
+},
+{
+    "model": "core.configuracionusuario",
+    "pk": 2,
+    "fields": {
+        "usuario": 2,
+        "tema_oscuro": true,
+        "notificaciones_activadas": true,
+        "idioma": "es"
+    }
+},
+{
+    "model": "core.configuracionusuario",
+    "pk": 3,
+    "fields": {
+        "usuario": 3,
+        "tema_oscuro": true,
+        "notificaciones_activadas": true,
+        "idioma": "es"
+    }
+},
+{
+    "model": "core.estadisticasusuario",
+    "pk": 1,
+    "fields": {
+        "usuario": 1,
+        "juegos_favoritos": 2,
+        "horas_totales": 120.0,
+        "nivel": 15,
+        "puntuacion_media": "8.50"
+    }
+},
+{
+    "model": "core.estadisticasusuario",
+    "pk": 2,
+    "fields": {
+        "usuario": 2,
+        "juegos_favoritos": 1,
+        "horas_totales": 80.0,
+        "nivel": 10,
+        "puntuacion_media": "7.50"
+    }
+},
+{
+    "model": "core.estadisticasusuario",
+    "pk": 3,
+    "fields": {
+        "usuario": 3,
+        "juegos_favoritos": 2,
+        "horas_totales": 200.0,
+        "nivel": 20,
+        "puntuacion_media": "9.00"
+    }
+},
+{
+    "model": "core.amistad",
+    "pk": 1,
+    "fields": {
+        "usuario_origen": 1,
+        "usuario_destino": 2,
+        "estado": "aceptada",
+        "fecha_solicitud": "2026-11-15T11:21:35.974Z",
+        "fecha_aceptacion": null
+    }
+},
+{
+    "model": "core.amistad",
+    "pk": 2,
+    "fields": {
+        "usuario_origen": 1,
+        "usuario_destino": 3,
+        "estado": "pendiente",
+        "fecha_solicitud": "2026-11-15T11:21:35.983Z",
+        "fecha_aceptacion": null
+    }
+},
+{
+    "model": "core.grupo",
+    "pk": 1,
+    "fields": {
+        "nombre": "Jugadores Minecraft",
+        "descripcion": "Grupo dedicado a Minecraft.",
+        "imagen": "",
+        "fecha_creacion": "2026-11-15T11:21:35.909Z",
+        "juegos": [
+            1
+        ]
+    }
+},
+{
+    "model": "core.grupo",
+    "pk": 2,
+    "fields": {
+        "nombre": "Aventureros",
+        "descripcion": "Amantes de los juegos de aventura.",
+        "imagen": "",
+        "fecha_creacion": "2026-11-15T11:21:35.915Z",
+        "juegos": [
+            1,
+            2
+        ]
+    }
+},
+{
+    "model": "core.pertenencia",
+    "pk": 1,
+    "fields": {
+        "usuario": 1,
+        "grupo": 1,
+        "rol": "administrador",
+        "fecha_union": "2026-11-15T11:21:35.935Z",
+        "fecha_salida": null
+    }
+},
+{
+    "model": "core.pertenencia",
+    "pk": 2,
+    "fields": {
+        "usuario": 2,
+        "grupo": 1,
+        "rol": "miembro",
+        "fecha_union": "2026-11-15T11:21:35.943Z",
+        "fecha_salida": null
+    }
+},
+{
+    "model": "core.pertenencia",
+    "pk": 3,
+    "fields": {
+        "usuario": 3,
+        "grupo": 2,
+        "rol": "administrador",
+        "fecha_union": "2026-11-15T11:21:35.950Z",
+        "fecha_salida": null
+    }
+},
+{
+    "model": "core.pertenencia",
+    "pk": 4,
+    "fields": {
+        "usuario": 1,
+        "grupo": 2,
+        "rol": "miembro",
+        "fecha_union": "2026-11-15T11:21:35.957Z",
+        "fecha_salida": null
+    }
+},
+{
+    "model": "core.pertenencia",
+    "pk": 5,
+    "fields": {
+        "usuario": 2,
+        "grupo": 2,
+        "rol": "miembro",
+        "fecha_union": "2026-11-15T11:21:35.965Z",
+        "fecha_salida": "2026-11-15T11:21:35.964Z"
+    }
+},
+{
+    "model": "core.juego",
+    "pk": 1,
+    "fields": {
+        "nombre": "Minecraft",
+        "descripcion": "Construccion y exploracion.",
+        "genero": "Aventura",
+        "imagen": "",
+        "fecha_lanzamiento": "2011-11-18",
+        "plataformas": "PC, PlayStation, Xbox"
+    }
+},
+{
+    "model": "core.juego",
+    "pk": 2,
+    "fields": {
+        "nombre": "The Legend of Zelda",
+        "descripcion": "Una aventura fantastica.",
+        "genero": "Aventura",
+        "imagen": "",
+        "fecha_lanzamiento": "2017-03-03",
+        "plataformas": "Nintendo Switch"
+    }
+},
+{
+    "model": "core.juego",
+    "pk": 3,
+    "fields": {
+        "nombre": "Fortnite",
+        "descripcion": "Battle royale multijugador.",
+        "genero": "Accion",
+        "imagen": "",
+        "fecha_lanzamiento": "2017-07-25",
+        "plataformas": "PC, PlayStation, Xbox"
+    }
+},
+{
+    "model": "core.noticia",
+    "pk": 1,
+    "fields": {
+        "titulo": "Novedades de Minecraft",
+        "contenido": "Descubre las novedades del mundo Minecraft.",
+        "fecha_publicacion": "2026-11-15T11:21:36.013Z",
+        "autor": 1,
+        "grupo": 1,
+        "juego": 1
+    }
+},
+{
+    "model": "core.noticia",
+    "pk": 2,
+    "fields": {
+        "titulo": "Nueva aventura de Zelda",
+        "contenido": "Todo sobre las aventuras de Zelda.",
+        "fecha_publicacion": "2026-11-15T11:21:36.020Z",
+        "autor": 2,
+        "grupo": 2,
+        "juego": 2
+    }
+},
+{
+    "model": "core.noticia",
+    "pk": 3,
+    "fields": {
+        "titulo": "Actualizacion de Fortnite",
+        "contenido": "Nuevas novedades y contenidos.",
+        "fecha_publicacion": "2026-11-15T11:21:36.030Z",
+        "autor": 3,
+        "grupo": null,
+        "juego": 3
+    }
+},
+{
+    "model": "core.comentario",
+    "pk": 1,
+    "fields": {
+        "contenido": "?Muy buena noticia!",
+        "fecha": "2026-11-15T11:21:36.038Z",
+        "usuario": 2,
+        "noticia": 1
+    }
+},
+{
+    "model": "core.comentario",
+    "pk": 2,
+    "fields": {
+        "contenido": "Me encanta este juego.",
+        "fecha": "2026-11-15T11:21:36.046Z",
+        "usuario": 3,
+        "noticia": 1
+    }
+},
+{
+    "model": "core.reaccion",
+    "pk": 1,
+    "fields": {
+        "tipo": "me_gusta",
+        "fecha": "2026-11-15T11:21:36.053Z",
+        "usuario": 1,
+        "noticia": 2
+    }
+},
+{
+    "model": "core.reaccion",
+    "pk": 2,
+    "fields": {
+        "tipo": "me_gusta",
+        "fecha": "2026-11-15T11:21:36.061Z",
+        "usuario": 2,
+        "noticia": 1
+    }
+},
+{
+    "model": "core.usuariojuego",
+    "pk": 1,
+    "fields": {
+        "usuario": 1,
+        "juego": 1,
+        "horas_jugadas": 50.0,
+        "favorito": true,
+        "fecha_inicio": null
+    }
+},
+{
+    "model": "core.usuariojuego",
+    "pk": 2,
+    "fields": {
+        "usuario": 2,
+        "juego": 3,
+        "horas_jugadas": 30.0,
+        "favorito": true,
+        "fecha_inicio": null
+    }
+},
+{
+    "model": "core.usuariojuego",
+    "pk": 3,
+    "fields": {
+        "usuario": 3,
+        "juego": 2,
+        "horas_jugadas": 100.0,
+        "favorito": true,
+        "fecha_inicio": null
+    }
+},
+{
+    "model": "core.chat",
+    "pk": 1,
+    "fields": {
+        "tipo": "grupal",
+        "fecha_creacion": "2026-11-15T11:21:36.069Z",
+        "nombre": "Chat GameLoop"
+    }
+},
+{
+    "model": "core.participantechat",
+    "pk": 1,
+    "fields": {
+        "usuario": 1,
+        "chat": 1,
+        "fecha_union": "2026-11-15T11:21:36.076Z",
+        "rol": "administrador"
+    }
+},
+{
+    "model": "core.participantechat",
+    "pk": 2,
+    "fields": {
+        "usuario": 2,
+        "chat": 1,
+        "fecha_union": "2026-11-15T11:21:36.082Z",
+        "rol": "miembro"
+    }
+},
+{
+    "model": "core.mensaje",
+    "pk": 1,
+    "fields": {
+        "contenido": "?Bienvenidos al chat!",
+        "fecha_envio": "2026-11-15T11:21:36.089Z",
+        "autor": 1,
+        "chat": 1
+    }
+},
+{
+    "model": "core.notificacion",
+    "pk": 1,
+    "fields": {
+        "tipo": "grupo",
+        "mensaje": "Te has unido a un grupo.",
+        "fecha": "2026-11-15T11:21:36.097Z",
+        "usuario": 1,
+        "leida": false
+    }
+},
+{
+    "model": "core.notificacion",
+    "pk": 2,
+    "fields": {
+        "tipo": "amistad",
+        "mensaje": "Tienes una solicitud de amistad.",
+        "fecha": "2026-11-15T11:21:36.104Z",
+        "usuario": 2,
+        "leida": false
+    }
+}
+]
