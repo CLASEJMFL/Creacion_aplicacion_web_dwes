@@ -1,4 +1,4 @@
-# GameLoop — Documentación del proyecto 🎮
+# Creación Aplicación Web Parte I
 
 ## 1. Descripción del proyecto
 
@@ -536,5 +536,134 @@ Deben mantenerse en el repositorio los archivos necesarios para ejecutar y evalu
 ## 14. Conclusión
 
 GameLoop aplica conceptos de desarrollo web con Django y Python mediante modelos, relaciones entre entidades, datos de prueba y copias de seguridad.
+
+---
+
+# Creación Aplicación Web Parte II
+
+## 15.1. Objetivo
+
+En esta segunda parte de GameLoop se amplía la aplicación mediante diez funcionalidades, utilizando URLs, vistas, plantillas HTML y consultas QuerySet de Django.
+
+Se trabaja con las relaciones OneToOne, ManyToOne y ManyToMany, así como con filtros, agregaciones y optimización de consultas.
+
+## 15.2. URLs y vistas implementadas
+
+Se han creado diez funcionalidades principales y una ruta adicional mediante `re_path()`.
+
+| URL | Vista | Funcionalidad |
+|---|---|---|
+| `/` | `index` | Índice principal. |
+| `/usuarios/` | `lista_usuarios` | Listado de usuarios. |
+| `/usuarios/<int:usuario_id>/` | `detalle_usuario` | Detalle de usuario y relaciones. |
+| `/juegos/` | `lista_juegos` | Listado de videojuegos. |
+| `/grupos/` | `lista_grupos` | Listado de grupos. |
+| `/grupos/<int:grupo_id>/<str:rol>/` | `detalle_grupo` | Detalle de grupo filtrado por rol. |
+| `/noticias/` | `lista_noticias` | Listado de noticias. |
+| `/noticias/<int:noticia_id>/` | `detalle_noticia` | Detalle de noticia. |
+| `/estadisticas/` | `estadisticas` | Estadísticas generales. |
+| `/buscar/<str:termino>/` | `buscar_juego` | Búsqueda de videojuegos. |
+| `/buscar-regex/<termino>/` | `buscar_juego` | Búsqueda utilizando `re_path()`. |
+
+Todas las funcionalidades disponen de sus correspondientes vistas y plantillas HTML.
+
+## 15.3. Relaciones entre modelos
+
+Las vistas recuperan información relacionada mediante los diferentes tipos de relaciones:
+
+- **OneToOne:** perfil, configuración y estadísticas de los usuarios.
+- **ManyToMany:** usuarios y grupos, juegos y grupos, participantes de chats.
+- **ManyToOne:** noticias, autores, comentarios, reacciones, amistades y mensajes.
+
+Para obtener esta información se utilizan `select_related()` y `prefetch_related()`.
+
+## 15.4. Consultas QuerySet
+
+En las vistas se utilizan diferentes métodos del ORM de Django:
+
+- `filter()` y `exclude()`.
+- `Q()` para combinar filtros AND y OR.
+- `annotate()` y `aggregate()` para realizar cálculos.
+- `Count()`, `Avg()` y `Sum()`.
+- `select_related()` y `prefetch_related()` para optimizar consultas.
+- `order_by()` para ordenar resultados.
+- Cortes de QuerySet para limitar resultados.
+- Relaciones inversas entre modelos.
+
+También se incluye un comentario con la consulta SQL aproximada correspondiente a cada QuerySet.
+
+Se ha implementado una consulta con agregación y filtrado para obtener los usuarios que han publicado noticias.
+
+En el modelo intermedio `Pertenencia` se utiliza un campo nullable para filtrar las pertenencias que todavía no tienen fecha de salida:
+
+```python
+.filter(fecha_salida__isnull=True)
+```
+
+## 15.5. Errores personalizados
+
+Se han creado cuatro páginas de error personalizadas:
+
+| Código | Descripción | Plantilla |
+|---|---|---|
+| 400 | Petición incorrecta. | `400.html` |
+| 403 | Acceso prohibido. | `403.html` |
+| 404 | Página no encontrada. | `404.html` |
+| 500 | Error interno del servidor. | `500.html` |
+
+Los manejadores se encuentran en `core/views.py` y están registrados en `GameLoop/urls.py`.
+
+## 15.6. Índice y plantillas
+
+Se ha creado un índice principal en `index.html` desde el que se puede acceder a las funcionalidades de la aplicación.
+
+Las plantillas se encuentran en `core/templates/core/` y utilizan `base.html` para mantener una estructura común.
+
+Cada vista incluye comentarios explicativos sobre su funcionamiento.
+
+## 15.7. Datos de prueba y ejecución
+
+El proyecto incluye el fixture `backup.json` y un comando personalizado `seed.py` para generar datos de prueba.
+
+Para instalar y ejecutar el proyecto:
+
+```bash
+python -m venv .venv
+```
+
+```bash
+.venv\Scripts\activate
+```
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+```bash
+python manage.py migrate
+python manage.py loaddata backup.json
+python manage.py runserver
+```
+
+La aplicación estará disponible en:
+
+`http://127.0.0.1:8000/`
+
+## 15.8. Configuración y control de archivos
+
+Se ha configurado `DEBUG = False` y se mantiene `.gitignore` para excluir entornos virtuales, archivos temporales, caché de Python y configuraciones locales.
+
+La configuración de producción debe adaptarse al servidor donde se despliegue la aplicación.
+
+## 15.9. Conclusión
+
+En esta segunda parte se han trabajado las consultas QuerySet de Django, las relaciones entre modelos, la optimización de consultas, las agregaciones y la gestión de errores personalizados.
+
+Con estas funcionalidades se amplía GameLoop y se ponen en práctica los conocimientos de URLs, Views, plantillas y acceso a bases de datos mediante el ORM de Django.
+
+---
+
+
+
 
 Este documento describe los modelos, sus campos, los parámetros principales y las relaciones declaradas en el proyecto. La implementación del código y las comprobaciones finales deben mantenerse sincronizadas con esta documentación.
