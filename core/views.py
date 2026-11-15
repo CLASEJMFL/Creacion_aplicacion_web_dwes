@@ -556,6 +556,7 @@ def estadisticas(request):
         )[:20]
     )
 
+
     return render(
         request,
         "core/estadisticas.html",
