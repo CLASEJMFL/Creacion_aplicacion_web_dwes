@@ -1,3 +1,4 @@
+
 from django.urls import path, re_path
 from . import views
 
@@ -71,11 +72,11 @@ urlpatterns = [
         views.buscar_juego,
         name="buscar_juego",
     ),
-    
-    # Url con re_path
+
+    # URL con re_path
     re_path(
         r'^buscar-regex/(?P<termino>[a-zA-Z0-9_-]+)/$',
         views.buscar_juego,
-        name="buscar_juego_regex"
+        name="buscar_juego_regex",
     ),
 ]

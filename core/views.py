@@ -311,14 +311,15 @@ def detalle_grupo(request, grupo_id, rol):
     # INNER JOIN core_grupo AS grupo
     #     ON grupo.id = pertenencia.grupo_id
     # WHERE pertenencia.grupo_id = %s
-    #   AND pertenencia.fecha_union IS NOT NULL
+    #   AND pertenencia.fecha_salida IS NULL
     # ORDER BY pertenencia.rol, usuario.username;
 
+    # Recuperamos las pertenencias activas del grupo.
     pertenencias = (
         Pertenencia.objects
         .filter(
             grupo=grupo,
-            fecha_union__isnull=False,
+            fecha_salida__isnull=True,
         )
         .select_related(
             "usuario",
@@ -340,24 +341,24 @@ def detalle_grupo(request, grupo_id, rol):
         # INNER JOIN core_grupo AS grupo
         #     ON grupo.id = pertenencia.grupo_id
         # WHERE pertenencia.grupo_id = %s
-        #   AND pertenencia.fecha_union IS NOT NULL
+        #   AND pertenencia.fecha_salida IS NULL
         #   AND pertenencia.rol = %s
         # ORDER BY pertenencia.rol, usuario.username;
 
         pertenencias = pertenencias.filter(rol=rol)
 
-    # exists() ejecuta una consulta para comprobar si hay resultados.
+    # exists() comprueba si hay resultados.
     # SQL aproximado:
     # SELECT 1
     # FROM core_pertenencia
     # WHERE grupo_id = %s
-    #   AND fecha_union IS NOT NULL
+    #   AND fecha_salida IS NULL
     # LIMIT 1;
 
     if not pertenencias.exists():
 
         # Si no hay resultados para el rol indicado,
-        # se recuperan todas las pertenencias del grupo.
+        # se recuperan todas las pertenencias activas del grupo.
         #
         # SQL aproximado:
         # SELECT pertenencia.*, usuario.*, grupo.*
@@ -367,14 +368,14 @@ def detalle_grupo(request, grupo_id, rol):
         # INNER JOIN core_grupo AS grupo
         #     ON grupo.id = pertenencia.grupo_id
         # WHERE pertenencia.grupo_id = %s
-        #   AND pertenencia.fecha_union IS NOT NULL
+        #   AND pertenencia.fecha_salida IS NULL
         # ORDER BY pertenencia.rol, usuario.username;
 
         pertenencias = (
             Pertenencia.objects
             .filter(
                 grupo=grupo,
-                fecha_union__isnull=False,
+                fecha_salida__isnull=True,
             )
             .select_related(
                 "usuario",
@@ -554,6 +555,7 @@ def estadisticas(request):
             "username",
         )[:20]
     )
+
 
     return render(
         request,
