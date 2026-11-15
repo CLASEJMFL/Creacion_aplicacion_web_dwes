@@ -1,8 +1,8 @@
-from django.urls import path, re_path
+from django.urls import path
 from . import views
 
 urlpatterns = [
-    # URL 6: dos parámetros: entero (grupo_id) y texto (rol)
+    # URL 6: dos parámetros: entero (grupo_id) y texto (rol).
     path(
         "grupos/<int:grupo_id>/<str:rol>/",
         views.detalle_grupo,
